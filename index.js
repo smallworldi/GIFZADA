@@ -45,7 +45,7 @@ client.on('messageCreate', async message => {
         .setStyle(ButtonStyle.Primary)
     );
 
-    await message.send({ embeds: [embed], components: [row] });
+    await message.channel.send({ embeds: [embed], components: [row] });
   }
 });
 
