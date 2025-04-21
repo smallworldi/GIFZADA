@@ -12,9 +12,13 @@ const fs = require('fs');
 const fetch = require('node-fetch');
 const sharp = require('sharp');
 const ffmpeg = require('fluent-ffmpeg');
+const ffmpegPath = require('ffmpeg-static');
+ffmpeg.setFfmpegPath(ffmpegPath); // Define o caminho do ffmpeg estático
 const { execFile } = require('child_process');
 const gifsicle = require('gifsicle');
 require('dotenv').config();
+
+// (restante do código continua normalmente)
 
 const client = new Client({
   intents: [
