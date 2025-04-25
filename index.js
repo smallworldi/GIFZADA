@@ -78,9 +78,16 @@ client.on('interactionCreate', async interaction => {
       .setColor('DarkAqua');
 
     const row = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId('video_to_gif').setLabel('🎥 Video → GIF').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId('video_to_gif').setLabel('🎥 Vídeo → GIF').setStyle(ButtonStyle.Secondary),
       new ButtonBuilder().setCustomId('resize_gif').setLabel('📏 Redimensionar GIF').setStyle(ButtonStyle.Secondary),
-      new ButtonBuilder().setCustomId('crop_image').setLabel('✂️ Cortar Imagem').setStyle(ButtonStyle.Secondary)
+      new ButtonBuilder().setCustomId('crop_image').setLabel('✂️ Cortar Imagem').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId('gif_to_video').setLabel('🎞 GIF → Vídeo').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId('png_to_jpeg').setLabel('🖼 PNG → JPEG').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId('cut_video').setLabel('✂️ Cortar Vídeo').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId('resize_image').setLabel('📏 Redimensionar Imagem').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId('apply_filter').setLabel('🎨 Aplicar Filtro').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId('gif_to_png').setLabel('📸 GIF → PNG').setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder().setCustomId('transparent_image').setLabel('💡 Transparência').setStyle(ButtonStyle.Secondary)
     );
 
     await thread.send({ content: `${user}`, embeds: [embed], components: [row] });
@@ -90,7 +97,14 @@ client.on('interactionCreate', async interaction => {
   const tipos = {
     video_to_gif: 'video-to-gif',
     resize_gif: 'resize-gif',
-    crop_image: 'crop-image'
+    crop_image: 'crop-image',
+    gif_to_video: 'gif-to-video',
+    png_to_jpeg: 'png-to-jpeg',
+    cut_video: 'cut-video',
+    resize_image: 'resize-image',
+    apply_filter: 'apply-filter',
+    gif_to_png: 'gif-to-png',
+    transparent_image: 'transparent-image'
   };
 
   if (tipos[customId]) {
@@ -177,7 +191,7 @@ async function processFile(attachment, type) {
     }
 
     case 'crop-image': {
-      const response = await fetch(attachment.url);
+      const response = await fetch(url);
       const buffer = await response.buffer();
 
       const isGif = attachment.name.endsWith('.gif') || attachment.contentType === 'image/gif';
@@ -206,9 +220,112 @@ async function processFile(attachment, type) {
       }
     }
 
+    case 'gif-to-video': {
+      const response = await fetch(url);
+      const gifBuffer = await response.buffer();
+      const tempInput = `temp_${nomeBase}.gif`;
+      const tempOutput = `temp_${nomeBase}.mp4`;
+      fs.writeFileSync(tempInput, gifBuffer);
+      temporarios.push(tempInput, tempOutput);
+
+      await new Promise((resolve, reject) => {
+        ffmpeg(tempInput)
+          .output(tempOutput)
+          .on('end', resolve)
+          .on('error', reject)
+          .run();
+      });
+
+      const video = fs.readFileSync(tempOutput);
+      return { buffer: video, name: `convertido.mp4`, temporarios };
+    }
+
+    case 'png-to-jpeg': {
+      const response = await fetch(url);
+      const buffer = await response.buffer();
+      const output = `output_${nomeBase}.jpg`;
+
+      await sharp(buffer)
+        .jpeg({ quality: 90 })
+        .toFile(output);
+
+      temporarios.push(output);
+      const jpeg = fs.readFileSync(output);
+      return { buffer: jpeg, name: `convertido.jpg`, temporarios };
+    }
+
+    case 'cut-video': {
+      const response = await fetch(url);
+      const videoBuffer = await response.buffer();
+      const tempInput = `input_${nomeBase}.mp4`;
+      const tempOutput = `output_${nomeBase}.mp4`;
+      fs.writeFileSync(tempInput, videoBuffer);
+      temporarios.push(tempInput, tempOutput);
+
+      await new Promise((resolve, reject) => {
+        ffmpeg(tempInput)
+          .setStartTime('00:00:10') // Iniciar em 10 segundos
+          .setDuration('00:00:20') // Duração de 20 segundos
+          .output(tempOutput)
+          .on('end', resolve)
+          .on('error', reject)
+          .run();
+      });
+
+      const slicedVideo = fs.readFileSync(tempOutput);
+      return { buffer: slicedVideo, name: `video_cortado.mp4`, temporarios };
+    }
+
+    case 'resize-image': {
+      const response = await fetch(url);
+      const imageBuffer = await response.buffer();
+
+      const resizedImage = await sharp(imageBuffer)
+        .resize(500, 500)
+        .toBuffer();
+
+      return { buffer: resizedImage, name: `imagem_redimensionada.png`, temporarios: [] };
+    }
+
+    case 'apply-filter': {
+      const response = await fetch(url);
+      const imageBuffer = await response.buffer();
+
+      const filteredImage = await sharp(imageBuffer)
+        .greyscale()
+        .toBuffer();
+
+      return { buffer: filteredImage, name: `imagem_filtro.png`, temporarios: [] };
+    }
+
+    case 'gif-to-png': {
+      const response = await fetch(url);
+      const gifBuffer = await response.buffer();
+
+      const output = `output_${nomeBase}.png`;
+      await sharp(gifBuffer)
+        .toFile(output);
+
+      temporarios.push(output);
+      const png = fs.readFileSync(output);
+      return { buffer: png, name: `imagem_convertida.png`, temporarios };
+    }
+
+    case 'transparent-image': {
+      const response = await fetch(url);
+      const imageBuffer = await response.buffer();
+
+      const transparentImage = await sharp(imageBuffer)
+        .resize(500, 500)
+        .ensureAlpha()
+        .toBuffer();
+
+      return { buffer: transparentImage, name: `imagem_transparente.png`, temporarios: [] };
+    }
+
     default:
-      throw new Error('Tipo de conversão inválido');
+      throw new Error('Tipo de conversão não reconhecido');
   }
 }
 
-client.login(process.env.TOKEN);
+client.login(process.env.BOT_TOKEN);
