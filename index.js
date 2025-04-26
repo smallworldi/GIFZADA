@@ -65,7 +65,7 @@ client.on('messageCreate', async message => {
 ・Tudo acontece de forma simples, rápida e sem complicação aqui no **GIFZADA**!
 `)
       .setThumbnail(interaction.guild.iconURL({ dynamic: true }))
-      .setColor('DarkButNotBlack');
+      .setColor('#870cff');
 
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
