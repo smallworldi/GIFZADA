@@ -71,7 +71,8 @@ client.on('messageCreate', async message => {
       new ButtonBuilder()
         .setCustomId('abrir_conversor')
         .setLabel('Converter')
-        .setStyle(ButtonStyle.Primary)
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji('<:gif:1365837774170755152>')
     );
 
     await message.channel.send({ embeds: [embed], components: [row] });
