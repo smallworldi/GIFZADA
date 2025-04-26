@@ -37,8 +37,7 @@ client.once('ready', () => {
 client.on('messageCreate', async message => {
   if (message.content === '!converter') {
     const embed = new EmbedBuilder()
-      .setTitle(`
-  :a_gifzada: **Bem-vindo ao nosso Conversor de Arquivos em fase BETA!**`)
+      .setTitle(':a_gifzada: **Bem-vindo ao nosso Conversor de Arquivos em fase BETA!**')
       .setDescription(`  
 > :d_dot43: *Agora você pode transformar vídeos e imagens de maneira rápida, fácil e totalmente automática, sem sair do Gifzada. Confira abaixo como funciona e aproveite todas as opções disponíveis:*
 
