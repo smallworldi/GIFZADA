@@ -57,7 +57,7 @@ client.on('messageCreate', async message => {
 :d_arrow: **Redimensionar GIF**  
 -# ・Perfeito para reduzir o tamanho, otimizar o carregamento ou adaptar para redes sociais.  
 
-:d_arrow: **Cortar Imagem/GIFs em 1:1**  
+:d_arrow: **Cortar Imagem em 1:1**  
 -# ・Ótimo para remover áreas indesejadas ou destacar detalhes importantes.
 
 :d_tag: **Informações adicionais:**  
@@ -85,7 +85,7 @@ client.on('interactionCreate', async interaction => {
 
   if (customId === 'abrir_conversor') {
     const starterMessage = await channel.send({
-      content: '‎', // caractere invisível (U+200E)
+      content: '‎', 
       allowedMentions: { users: [] }
     });
 
@@ -95,11 +95,14 @@ client.on('interactionCreate', async interaction => {
       reason: 'Conversão de arquivos'
     });
 
-    // Apaga a mensagem imediatamente
+    
     starterMessage.delete().catch(() => {});
     const embed = new EmbedBuilder()
       .setTitle('Opções de Conversão')
-      .setDescription(`${user}, escolha uma das opções abaixo e envie seu arquivo:`)
+      .setDescription(`${user}, 
+      -> Escolha uma das opções abaixo de acordo com o que deseja.
+-> Envie seu arquivo (imagem ou vídeo) no chat e aguarde o bot realizar a conversão.
+-> Seu chat será fechado automaticamente.`)
       .setColor('#870CFF');
 
     const row = new ActionRowBuilder().addComponents(
@@ -171,9 +174,16 @@ async function processFile(attachment, type) {
 
   switch (type) {
     case 'video-to-gif': {
+      const validFormats = ['.mp4', '.wmv', '.flv', '.mov'];
+      const fileExtension = attachment.name.toLowerCase().match(/\.[^.]*$/)?.[0];
+      
+      if (!fileExtension || !validFormats.includes(fileExtension)) {
+        throw new Error('Formato de vídeo não suportado. Use: .mp4, .wmv, .flv ou .mov');
+      }
+
       const response = await fetch(url);
       const videoBuffer = await response.buffer();
-      const tempInput = `temp_${nomeBase}.mp4`;
+      const tempInput = `temp_${nomeBase}${fileExtension}`;
       const tempOutput = `temp_${nomeBase}.gif`;
       fs.writeFileSync(tempInput, videoBuffer);
       temporarios.push(tempInput, tempOutput);
