@@ -57,7 +57,7 @@ client.on('messageCreate', async message => {
 :d_arrow: **Redimensionar GIF**  
 -# ・Perfeito para reduzir o tamanho, otimizar o carregamento ou adaptar para redes sociais.  
 
-:d_arrow: **Cortar Imagem em 1:1**  
+:d_arrow: **Cortar Imagem/GIFs em 1:1**  
 -# ・Ótimo para remover áreas indesejadas ou destacar detalhes importantes.
 
 :d_tag: **Informações adicionais:**  
@@ -99,10 +99,10 @@ client.on('interactionCreate', async interaction => {
     starterMessage.delete().catch(() => {});
     const embed = new EmbedBuilder()
       .setTitle('Opções de Conversão')
-      .setDescription(`${user}, 
-      -> Escolha uma das opções abaixo de acordo com o que deseja.
--> Envie seu arquivo **(imagem ou vídeo)** no chat e aguarde o bot realizar a conversão.
--> Seu chat será fechado automaticamente.`)
+      .setDescription(`${user} 
+      :d_dot43: Escolha uma das opções abaixo de acordo com o que deseja.
+:d_dot43: Envie seu arquivo **(imagem ou vídeo)** no chat e aguarde o bot realizar a conversão.
+:d_dot43: Seu chat será fechado automaticamente.`)
       .setColor('#870CFF');
 
     const row = new ActionRowBuilder().addComponents(
