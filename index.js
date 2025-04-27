@@ -216,8 +216,7 @@ async function processFile(attachment, type) {
 
         await new Promise((resolve, reject) => {
           execFile(gifsicle, [
-            '--resize-fit', '500x500',
-            '--crop', '0,0+500x500',
+            '--resize', '500x500',
             inputPath, 
             '-o', outputPath
           ], err => {
