@@ -101,7 +101,7 @@ client.on('interactionCreate', async interaction => {
       .setTitle('Opções de Conversão')
       .setDescription(`${user}, 
       -> Escolha uma das opções abaixo de acordo com o que deseja.
--> Envie seu arquivo (imagem ou vídeo) no chat e aguarde o bot realizar a conversão.
+-> Envie seu arquivo **(imagem ou vídeo)** no chat e aguarde o bot realizar a conversão.
 -> Seu chat será fechado automaticamente.`)
       .setColor('#870CFF');
 
