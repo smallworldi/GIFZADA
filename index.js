@@ -57,7 +57,7 @@ client.on('messageCreate', async message => {
 :d_arrow: **Redimensionar GIF**  
 -# ・Perfeito para reduzir o tamanho, otimizar o carregamento ou adaptar para redes sociais.  
 
-:d_arrow: **Cortar Imagem em 1:1**  
+:d_arrow: **Cortar Imagem/GIFs em 1:1**  
 -# ・Ótimo para remover áreas indesejadas ou destacar detalhes importantes.
 
 :d_tag: **Informações adicionais:**  
