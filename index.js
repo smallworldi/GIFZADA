@@ -72,7 +72,6 @@ client.on('messageCreate', async message => {
         .setCustomId('abrir_conversor')
         .setLabel('Converter')
         .setStyle(ButtonStyle.Secondary)
-        .setEmoji('<:gif:1365837774170755152>')
     );
 
     await message.channel.send({ embeds: [embed], components: [row] });
@@ -101,12 +100,21 @@ client.on('interactionCreate', async interaction => {
     const embed = new EmbedBuilder()
       .setTitle('Opções de Conversão')
       .setDescription(`${user}, escolha uma das opções abaixo e envie seu arquivo:`)
-      .setColor('DarkAqua');
+      .setColor('#870CFF');
 
     const row = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId('video_to_gif').setLabel('🎥 Video → GIF').setStyle(ButtonStyle.Secondary),
-      new ButtonBuilder().setCustomId('resize_gif').setLabel('📏 Redimensionar GIF').setStyle(ButtonStyle.Secondary),
-      new ButtonBuilder().setCustomId('crop_image').setLabel('✂️ Cortar Imagem').setStyle(ButtonStyle.Secondary)
+      new ButtonBuilder()
+.setCustomId('video_to_gif').setLabel('Video → GIF')
+.setEmoji('<:videotogif:1366159226891931688>')
+.setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder()
+      .setCustomId('resize_gif').setLabel('Redimensionar GIF')
+.setEmoji('<:resize:1366160012774477824>')
+.setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder()
+.setCustomId('crop_image').setLabel('Cortar Imagem')
+.setEmoji('<:crop:1366160563872202892>')
+.setStyle(ButtonStyle.Secondary)
     );
 
     await thread.send({ content: `${user}`, embeds: [embed], components: [row] });
