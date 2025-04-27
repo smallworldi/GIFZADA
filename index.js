@@ -206,7 +206,7 @@ async function processFile(attachment, type) {
       const response = await fetch(attachment.url);
       const buffer = await response.buffer();
 
-      const isGif = attachment.name.endsWith('.gif') || attachment.contentType === 'image/gif';
+      const isGif = attachment.name.toLowerCase().endsWith('.gif') || attachment.contentType === 'image/gif';
 
       if (isGif) {
         const inputPath = `input_${nomeBase}.gif`;
@@ -215,7 +215,12 @@ async function processFile(attachment, type) {
         temporarios.push(inputPath, outputPath);
 
         await new Promise((resolve, reject) => {
-          execFile(gifsicle, ['--crop', '0,0+500x500', inputPath, '-o', outputPath], err => {
+          execFile(gifsicle, [
+            '--resize-fit', '500x500',
+            '--crop', '0,0+500x500',
+            inputPath, 
+            '-o', outputPath
+          ], err => {
             if (err) return reject(err);
             resolve();
           });
@@ -224,11 +229,19 @@ async function processFile(attachment, type) {
         const croppedGif = fs.readFileSync(outputPath);
         return { buffer: croppedGif, name: `convertido.gif`, temporarios };
       } else {
+        const extension = attachment.name.split('.').pop().toLowerCase();
         const croppedImage = await sharp(buffer)
-          .resize(500, 500, { fit: 'cover' })
-          .toFormat('png')
+          .resize(500, 500, {
+            fit: 'cover',
+            position: 'center'
+          })
           .toBuffer();
-        return { buffer: croppedImage, name: `convertido.png`, temporarios: [] };
+        
+        return { 
+          buffer: croppedImage, 
+          name: `convertido.${extension || 'png'}`, 
+          temporarios: [] 
+        };
       }
     }
 
