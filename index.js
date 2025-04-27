@@ -64,7 +64,7 @@ client.on('messageCreate', async message => {
 ・As conversões são automáticas, práticas e feitas dentro da thread privada;  
 ・Tudo acontece de forma simples, rápida e sem complicação aqui no **GIFZADA**!
 `)
-     .setThumbnail('https://i.imgur.com/Tqnf4HU.gif')
+     .setThumbnail('https://cdn.discordapp.com/icons/953748240589787136/a_85b194eaf3055cfc583d70b3b14cbaa5.gif?size=2048')
       .setColor('#870cff');
 
     const row = new ActionRowBuilder().addComponents(
