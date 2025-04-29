@@ -37,30 +37,30 @@ client.once('ready', () => {
 client.on('messageCreate', async message => {
   if (message.content === '!converter') {
     const embed = new EmbedBuilder()
-      .setTitle(':a_gifzada: **Bem-vindo ao nosso Conversor de Arquivos em fase BETA!**')
+      .setTitle('<:a_gifzada:1366589212249296966> **Bem-vindo ao nosso Conversor de Arquivos em fase BETA!**')
       .setDescription(`  
-> :d_dot43: *Agora você pode transformar vídeos e imagens de maneira rápida, fácil e totalmente automática, sem sair do Gifzada. Confira abaixo como funciona e aproveite todas as opções disponíveis:*
+> <:d_dot43:1366581992413728830> *Agora você pode transformar vídeos e imagens de maneira rápida, fácil e totalmente automática, sem sair do Gifzada. Confira abaixo como funciona e aproveite todas as opções disponíveis:*
 
-:d_emoji_273: **Como utilizar o conversor:**  
+<:d_emoji_273:1366581300500365343> **Como utilizar o conversor:**  
 \`1.\` Separe o arquivo que deseja converter antes de começar;  
 \`2.\` Clique no botão abaixo para iniciar;  
 \`3.\` Um espaço privado (thread) será criado exclusivamente para você;  
 \`4.\` Dentro da thread, escolha a conversão desejada e envie seu arquivo;  
 \`5.\` O resultado será entregue diretamente na mesma conversa, pronto para ser usado!
 
-:d_emoji_274~1: **Opções de conversão disponíveis:**  
+<:d_emoji_274:1366581475310309376> **Opções de conversão disponíveis:**  
 
-:d_arrow: **Vídeo para GIF**  
+<:d_arrow:1366582051507273728> **Vídeo para GIF**  
 -# ・Transforme pequenos trechos de vídeos em GIFs animados de forma simples e rápida.  
 -# ・Ideal para criar GIFs criativos a partir de formatos como .mp4, .wmv, .flv e .mov.  
 
-:d_arrow: **Redimensionar GIF**  
+<:d_arrow:1366582051507273728> **Redimensionar GIF**  
 -# ・Perfeito para reduzir o tamanho, otimizar o carregamento ou adaptar para redes sociais.  
 
-:d_arrow: **Cortar Imagem/GIFs em 1:1**  
+<:d_arrow:1366582051507273728> **Cortar Imagem/GIFs em 1:1**  
 -# ・Ótimo para remover áreas indesejadas ou destacar detalhes importantes.
 
-:d_tag: **Informações adicionais:**  
+<:d_tag:1366581862004166656> **Informações adicionais:**  
 ・As conversões são automáticas, práticas e feitas dentro da thread privada;  
 ・Tudo acontece de forma simples, rápida e sem complicação aqui no **GIFZADA**!
 `)
@@ -100,9 +100,9 @@ client.on('interactionCreate', async interaction => {
     const embed = new EmbedBuilder()
       .setTitle('Opções de Conversão')
       .setDescription(`${user} 
-      :d_dot43: Escolha uma das opções abaixo de acordo com o que deseja.
-:d_dot43: Envie seu arquivo **(imagem ou vídeo)** no chat e aguarde o bot realizar a conversão.
-:d_dot43: Seu chat será fechado automaticamente.`)
+      <:d_dot43:1366581992413728830> Escolha uma das opções abaixo de acordo com o que deseja.
+<:d_dot43:1366581992413728830> Envie seu arquivo **(imagem ou vídeo)** no chat e aguarde o bot realizar a conversão.
+<:d_dot43:1366581992413728830> Seu chat será fechado automaticamente.`)
       .setColor('#870CFF');
 
     const row = new ActionRowBuilder().addComponents(
